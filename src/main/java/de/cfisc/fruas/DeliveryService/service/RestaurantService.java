@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import de.cfisc.fruas.DeliveryService.database.DatabaseClass;
+import de.cfisc.fruas.DeliveryService.exception.DataNotFoundException;
 import de.cfisc.fruas.DeliveryService.model.Restaurant;
 
 public class RestaurantService {
@@ -12,8 +13,8 @@ public class RestaurantService {
 	private Map<Integer, Restaurant> restaurants = DatabaseClass.getRestaurants();
 	
 	public RestaurantService() {
-		restaurants.put(1, new Restaurant(1, "Tony's Pizza Place", "123-CallTony", "pizza@tony.com", "Pizza Street, 123 Pizza Town"));
-		restaurants.put(2, new Restaurant(2, "Bob's Burger Bar", "321-CallBob", "burger@bob.com", "Burger Street, 321 Burger Town"));
+		restaurants.put(1, new Restaurant(1, "Tony's Pizza Place", "123-CallTony", "pizza@tony.com", "secret", "Pizza Street, 123 Pizza Town"));
+		restaurants.put(2, new Restaurant(2, "Bob's Burger Bar", "321-CallBob", "burger@bob.com", "pw123", "Burger Street, 321 Burger Town"));
 	}
 	
 	public List<Restaurant> getAllRestaurants() {
@@ -21,7 +22,11 @@ public class RestaurantService {
 	}
 	
 	public Restaurant getRestaurant(int id) {
-		return restaurants.get(id);
+		Restaurant restaurant =  restaurants.get(id);
+		if(restaurant == null) {
+			throw new DataNotFoundException("Restaurant with id " + id + " not found.");		
+		}
+		return restaurant;
 	}
 	
 	public Restaurant addRestaurant(Restaurant restaurant) {

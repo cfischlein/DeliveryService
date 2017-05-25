@@ -13,18 +13,21 @@ public class Restaurant {
 	private String name;
 	private String telephone;
 	private String email;
+	private String password;
 	private String address;
 	private Map<Integer, MenuItem> menuItems = new HashMap<>();
-
+	private Map<Integer, Order> orders = new HashMap<>();
+	
 	public Restaurant() {
 
 	}
 
-	public Restaurant(int id, String name, String telephone, String email, String address) {
+	public Restaurant(int id, String name, String telephone, String email, String password, String address) {
 		this.id = id;
 		this.name = name;
 		this.telephone = telephone;
 		this.email = email;
+		this.password = password;
 		this.address = address;
 	}
 
@@ -66,14 +69,35 @@ public class Restaurant {
 	
 	public void setAddress(String address) {
 		this.address = address;
-	}
-	@XmlTransient
+	}	
+	
+	@XmlTransient		
 	public Map<Integer, MenuItem> getMenuItems() {
 		return menuItems;
+	}
+
+	@XmlTransient	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public void setMenuItems(Map<Integer, MenuItem> menuItems) {
 		this.menuItems = menuItems;
 	}
 
+	@XmlTransient	
+	public Map<Integer, Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(Map<Integer, Order> orders) {
+		this.orders = orders;
+	}
+
+	
+	
 }

@@ -1,5 +1,6 @@
 package de.cfisc.fruas.DeliveryService.resources;
 
+import java.net.URI;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -10,7 +11,10 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import de.cfisc.fruas.DeliveryService.model.Restaurant;
 import de.cfisc.fruas.DeliveryService.service.RestaurantService;
@@ -34,8 +38,14 @@ public class RestaurantResource {
 	}
 	
 	@POST	
-	public Restaurant addRestaurant(Restaurant restaurant) {
-		return restaurantService.addRestaurant(restaurant);
+	//TODO return response everywhere else
+	public Response addRestaurant(Restaurant restaurant, @Context UriInfo uriInfo) {
+		Restaurant newRestaurant = restaurantService.addRestaurant(restaurant);
+		String newId = String.valueOf(newRestaurant.getId());
+		URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();
+		return Response.created(uri)
+				.entity(newRestaurant)				
+				.build();		
 	}	
 	
 	@PUT

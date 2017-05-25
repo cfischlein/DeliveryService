@@ -1,8 +1,12 @@
-package de.cfisc.fruas.DeliveryService;
+package de.cfisc.fruas.DeliveryService.service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import javax.ws.rs.NotFoundException;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response.Status;
 
 import de.cfisc.fruas.DeliveryService.database.DatabaseClass;
 import de.cfisc.fruas.DeliveryService.model.MenuItem;
@@ -25,8 +29,16 @@ public class MenuItemService {
 	}
 	
 	public MenuItem getMenuItem(int restaurantId, int menuItemId) {
+		Restaurant restaurant = restaurants.get(restaurantId);
+		if(restaurant == null) {
+			throw new WebApplicationException(Status.NOT_FOUND);
+		}
 		Map<Integer, MenuItem> menuItems = restaurants.get(restaurantId).getMenuItems();
-		return menuItems.get(menuItemId);
+		MenuItem menuItem =  menuItems.get(menuItemId);
+		if(menuItem == null) {
+			throw new NotFoundException();
+		}
+		return menuItem;
 	}
 	
 	public MenuItem addMenuItem(int restaurantId, MenuItem menuItem) {
