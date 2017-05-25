@@ -13,5 +13,11 @@
    	<p><br>Customers:
     <br><a href="webapi/customers">webapi/customers - GET, POST</a>
    	<br><a href="webapi/customers/1">webapi/customers/{id} - GET, PUT, DELETE</a></p>
+   	
+   	<h2>Restaurant Web App JSP's:</h2>
+   	<br><a href="/login">Login Page</a>
+    <br><a href="/register">Registration Page</a>
+    
+   	
 </body>
 </html>
